@@ -1,7 +1,11 @@
+import * as SystemUI from "expo-system-ui";
 import { useState } from "react";
 import { Button, FlatList, StyleSheet, View } from "react-native";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
+import { StatusBar } from "expo-status-bar";
+
+SystemUI.setBackgroundColorAsync("#1e085a");
 
 export default function App() {
   const [courseGoals, setcourseGoals] = useState([]);
@@ -25,32 +29,35 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title="Add New Goal"
-        color="#5e0acc"
-        onPress={() => setIsAddModalVisible(true)}
-      />
-      <GoalInput
-        onAddGoal={addGoalHandler}
-        visible={isAddModalVisible}
-        onCancel={() => setIsAddModalVisible(false)}
-      />
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={courseGoals}
-          alwaysBounceVertical={false}
-          keyExtractor={(item, _) => item.id}
-          renderItem={(itemData) => (
-            <GoalItem
-              id={itemData.item.id}
-              text={itemData.item.text}
-              onDeleteItem={deleteGoalHandler}
-            />
-          )}
-        ></FlatList>
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add New Goal"
+          color="#a065ec"
+          onPress={() => setIsAddModalVisible(true)}
+        />
+        <GoalInput
+          onAddGoal={addGoalHandler}
+          visible={isAddModalVisible}
+          onCancel={() => setIsAddModalVisible(false)}
+        />
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={courseGoals}
+            alwaysBounceVertical={false}
+            keyExtractor={(item, _) => item.id}
+            renderItem={(itemData) => (
+              <GoalItem
+                id={itemData.item.id}
+                text={itemData.item.text}
+                onDeleteItem={deleteGoalHandler}
+              />
+            )}
+          ></FlatList>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
